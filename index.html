@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" id="app">
 
         <div class="row mt-5">
             <div class="col-12 border-bottom mb-5">
@@ -65,8 +65,14 @@
             </div>
         </div>
     </div>
+
     <!-- LINK DE SCRIPT DE FRAMEWORK VUE.JS -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>    
+        let app = new Vue({
+            el: "#app" // Instanciado o elemento a ser gerenciado pelo Vue 
+        });
+    </script>
 </body>
 
 </html>
