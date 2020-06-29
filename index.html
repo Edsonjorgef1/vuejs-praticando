@@ -47,7 +47,7 @@
 
                 <div class="contact">
 
-                    <div class="col-12 mb-2">
+                    <div class="col-12 mb-2" v-for="contact in contacts">
 
                         <div class="card">
                             <div class="card-body">
@@ -73,12 +73,17 @@
         let app = new Vue({
             el: "#app", // Instanciado o elemento a ser gerenciado pelo Vue
             data: {
-                name: 'Contactos', 
+                contacts: [], 
+                name: 'Contactos App', 
                 contact: {  // Chave criada para usar para o formulario
                     name: '',
                     email: '',
                     phone: ''
                 }
+            },
+            created(){ // Sempre que eh detectado pelo Vue, eh carregado na pagina
+                // console.log('Vue criado...')
+                this.contacts = localStorage.getItem('contactsApp');    // Inicia o Ciclo de Vida alimentando com Dados -> Os valores de contactos
             },
             methods: {   /* Definicao de nova chave de "metodos" */
                 saveContact(contact){     // Usando um parametro que eh recebido na execucao do clique do botao 
