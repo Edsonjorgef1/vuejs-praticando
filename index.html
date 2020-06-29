@@ -76,9 +76,10 @@
                 contacts: [], 
                 name: 'Contactos App', 
                 contact: {  // Chave criada para usar para o formulario
+                    id: '',
                     name: '',
+                    phone: '',
                     email: '',
-                    phone: ''
                 }
             },
             created(){ // Sempre que eh detectado pelo Vue, eh carregado na pagina
@@ -89,6 +90,9 @@
                 saveContact(contact){     // Usando um parametro que eh recebido na execucao do clique do botao 
                     /* console.log(this.contact)  // Instancia de todo objecto a ser enviado no formulario */
                     let contacts = localStorage.getItem('contactsApp'); 
+
+                    contact.id = new Date( ).getTime();   // Atribui um ID dinamico
+
 
                     if(contacts){
                         /*  actualizar meus contactos no local storage */
