@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="form-group ml-1">
-                        <button class="btn btn-lg btn-rounded btn-success">Criar Contacto</button>
+                        <button class="btn btn-lg btn-rounded btn-success" v-on:click.prevent="showContact">Criar Contacto</button>  <!-- metodo para visualizar no console & precisa ignorar o submit usando o modificador "prevent" -->
                     </div>
                 </form>
             </div>
@@ -78,6 +78,11 @@
                     name: '',
                     email: '',
                     phone: ''
+                }
+            },
+            methods: {  // Definicao de nova chave de "methodos"
+                showContact(){     
+                    console.log(this.contact)  // Instancia de todo objecto a ser enviado no formulario
                 }
             } 
         });
