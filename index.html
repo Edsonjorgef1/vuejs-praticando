@@ -51,9 +51,9 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Edson Jorge Francisco</h5>
+                                <h5 class="card-title">{{contact.name}}</h5>
 
-                                <p class="card-text">edson@equipmoz.org, +258-851234567</p>
+                                <p class="card-text">{{contact.email}}, {{contact.phone}}</p>
 
                                 <a href="#" class="btn btn-sm btn-primary">EDITAR</a>
                                 <a href="#" class="btn btn-sm btn-danger">DELETAR</a>
@@ -83,7 +83,7 @@
             },
             created(){ // Sempre que eh detectado pelo Vue, eh carregado na pagina
                 // console.log('Vue criado...')
-                this.contacts = localStorage.getItem('contactsApp');    // Inicia o Ciclo de Vida alimentando com Dados -> Os valores de contactos
+                this.contacts = JSON.parse(localStorage.getItem('contactsApp'));    // Inicia o Ciclo de Vida alimentando com Dados -> Os valores de contactos modificados para Array com JSON.parse
             },
             methods: {   /* Definicao de nova chave de "metodos" */
                 saveContact(contact){     // Usando um parametro que eh recebido na execucao do clique do botao 
