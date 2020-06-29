@@ -80,9 +80,22 @@
                     phone: ''
                 }
             },
-            methods: {  // Definicao de nova chave de "metodos"
+            methods: {   /* Definicao de nova chave de "metodos" */
                 saveContact(contact){     // Usando um parametro que eh recebido na execucao do clique do botao 
-                    console.log(this.contact)  // Instancia de todo objecto a ser enviado no formulario
+                    /* console.log(this.contact)  // Instancia de todo objecto a ser enviado no formulario */
+                    let contacts = localStorage.getItem('contactsApp'); 
+
+                    if(contacts){
+                        /*  actualizar meus contactos no local storage */
+                        contacts = JSON.parse(contacts);  // Modifica o JSON em um Array 
+                        contacts.push(contact);           // Adiciona um novo campo no Array
+                    } else {
+                        // criou esta chave "contactos"
+                        contacts = [contact];
+                    }
+
+                    /*  actualizar local storage independemente de novo contacto ou nova adicao */
+                    localStorage.setItem('contactsApp', JSON.stringify(contacts)) // Converte o Array em formato JSON
                 }
             } 
         });
