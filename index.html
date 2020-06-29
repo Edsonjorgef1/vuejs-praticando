@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="form-group ml-1">
-                        <button class="btn btn-lg btn-rounded btn-success" v-on:click.prevent="showContact">Criar Contacto</button>  <!-- metodo para visualizar no console & precisa ignorar o submit usando o modificador "prevent" -->
+                        <button class="btn btn-lg btn-rounded btn-success" v-on:click.prevent="saveContact(contact)">Criar Contacto</button>  <!-- metodo para visualizar no console & precisa ignorar o submit usando o modificador "prevent" -->
                     </div>
                 </form>
             </div>
@@ -80,8 +80,8 @@
                     phone: ''
                 }
             },
-            methods: {  // Definicao de nova chave de "methodos"
-                showContact(){     
+            methods: {  // Definicao de nova chave de "metodos"
+                saveContact(contact){     // Usando um parametro que eh recebido na execucao do clique do botao 
                     console.log(this.contact)  // Instancia de todo objecto a ser enviado no formulario
                 }
             } 
