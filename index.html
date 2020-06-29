@@ -96,9 +96,10 @@
                         contacts.push(contact);           // Adiciona um novo campo no Array
                     } else {
                         // criou esta chave "contactos"
-                        contacts = [contact];
+                        contacts = [contact]
                     }
 
+                    this.contacts = contacts;  // Subscreve o valor de novo contacto para depois inserir no novo storage
                     /*  actualizar local storage independemente de novo contacto ou nova adicao */
                     localStorage.setItem('contactsApp', JSON.stringify(contacts)) // Converte o Array em formato JSON
                 }
