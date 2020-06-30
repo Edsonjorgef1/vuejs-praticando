@@ -56,7 +56,7 @@
                                 <p class="card-text">{{contact.email}}, {{contact.phone}}</p>
 
                                 <a href="#" class="btn btn-sm btn-primary">EDITAR</a>
-                                <a href="#" class="btn btn-sm btn-danger">DELETAR</a>
+                                <a href="#" class="btn btn-sm btn-danger" @click.prevent="removeContact(contact.id)">DELETAR</a>
                             </div>
 
                         </div>
@@ -103,9 +103,28 @@
                     }
 
                     this.contacts = contacts;  // Subscreve o valor de novo contacto para depois inserir no novo storage
-                    
+
                     /*  actualizar local storage independemente de novo contacto ou nova adicao */
                     localStorage.setItem('contactsApp', JSON.stringify(contacts)) // Converte o Array em formato JSON
+                },
+                removeContact(contactId){
+                    // console.log("ID: " + contactId)
+
+                    let contacts = localStorage.getItem('contactsApp');
+
+                    if(!contacts) return;
+
+                    contactos = JSON.parse(contacts);
+
+                    // Bug - faltava o "this"
+                    contacts = this.contacts.filter((contact) => {
+                        console.log("ID: " + contactId + " & Nome: " + contact.name)
+                        return contact.id != contactId;
+                    });
+
+                    this.contacts = contacts;
+
+                    localStorage.setItem('contactsApp', JSON.stringify(contacts));
                 }
             } 
         });
