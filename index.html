@@ -12,8 +12,9 @@
     <div class="container" id="app">
             
         <div class="row mt-5">
-            <div class="col-12 border-bottom mb-5">
+            <div class="col-12 border-bottom mb-5 d-flex justify-content-between align-items-center">
                 <h2>{{name}}</h2>
+                <p>{{contactsCount}}</p>
             </div>
 
             <div class="col-4">
@@ -83,6 +84,12 @@
                     email: '',
                 },
                 isEdit: false
+            },
+            computed: {
+                contactsCount(){
+                        return 'Total de contactos: ' + this.contacts.length;
+                        // return `Total de contactos: ${this.contacts.length}`;
+                }
             },
             created(){ // Sempre que eh detectado pelo Vue, eh carregado na pagina
                 // console.log('Vue criado...')
