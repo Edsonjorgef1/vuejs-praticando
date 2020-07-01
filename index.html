@@ -19,16 +19,11 @@
 
             <div class="col-4">
 
-                <!-- <div v-if="numberTest == 11">Valor 11</div>
-                <div v-else-if="numberTest == 10">Valor 10</div>
-                <div v-else>Nenhum dos valores pensados... </div> -->
-
                 <form action="">
 
                     <div class="form-group mr-1">
                         <label>Nome</label>
                         <input type="text" class="form-control" placeholder="Nome Completo..." v-model="contact.name">
-                        <!-- {{ contact.name}} -->
                     </div>
 
 
@@ -46,7 +41,6 @@
                     <div class="form-group ml-1">
                         <button v-if="!isEdit" class="btn btn-lg btn-rounded btn-success"
                             @click.prevent="saveContact(contact)">Criar Contacto</button>
-                        <!-- metodo para visualizar no console & precisa ignorar o submit usando o modificador "prevent" -->
                         <button v-if="isEdit" class="btn btn-lg btn-rounded btn-secondary"
                             @click.prevent="updateContact(contact)">Actualizar Contacto</button>
                     </div>
@@ -89,7 +83,7 @@
             data: {
                 contacts: [],
                 name: 'Contactos App',
-                contact: { // Chave criada para usar para o formulario
+                contact: {
                     id: '',
                     name: '',
                     phone: '',
@@ -97,45 +91,37 @@
                 },
                 isEdit: false,
                 title: 'Meu primeiro app - VueJS'
-                // numberTest: 20  // Pode testar modificar o valor para 10 & 11 no Vue-dev.tools
             },
             computed: {
                 contactsCount() {
-                    return 'Total de contactos: ' + this.contacts.length;
-                    // return `Total de contactos: ${this.contacts.length}`;
+                    return `Total de contactos: ${this.contacts.length}`;
                 }
             },
-            created() { // Sempre que eh detectado pelo Vue, eh carregado na pagina
-                // console.log('Vue criado...')
+            created() {
                 this.contacts = JSON.parse(localStorage.getItem(
                     'contactsApp'
-                )); // Inicia o Ciclo de Vida alimentando com Dados -> Os valores de contactos modificados para Array com JSON.parse
+                ));
             },
             methods: {
-                /* Definicao de nova chave de "metodos" */
-                saveContact(contact) { // Usando um parametro que eh recebido na execucao do clique do botao 
-                    /* console.log(this.contact)  // Instancia de todo objecto a ser enviado no formulario */
+                saveContact(contact) {
                     let contacts = localStorage.getItem('contactsApp');
 
-                    contact.id = new Date().getTime(); // Atribui um ID dinamico
+                    contact.id = new Date().getTime();
 
                     if (contacts) {
-                        /*  actualizar meus contactos no local storage */
-                        contacts = JSON.parse(contacts); // Modifica o JSON em um Array 
-                        contacts.push(contact); // Adiciona um novo campo no Array
+                        contacts = JSON.parse(contacts);
+                        contacts.push(contact);
                     } else {
-                        // criou esta chave "contactos"
                         contacts = [contact]
                     }
 
                     this.contacts =
-                        contacts; // Subscreve o valor de novo contacto para depois inserir no novo storage
+                        contacts;
 
-                    /*  actualizar local storage independemente de novo contacto ou nova adicao */
                     localStorage.setItem('contactsApp', JSON.stringify(
-                        contacts)) // Converte o Array em formato JSON
+                        contacts))
 
-                    location.reload(); // Limpar o formulario
+                    location.reload();
                 },
                 removeContact(contactId) {
                     console.log("ID: " + contactId)
@@ -146,43 +132,37 @@
 
                     contacts = JSON.parse(contacts);
 
-                    // Bug - faltava o "this"
                     contacts = this.contacts.filter((contact) => {
-                        // console.log("ID: " + contactId + " & Nome: " + contact.name)
+
                         return contact.id !=
-                            contactId; // Retorna apenas os ID diferentes do id escolhido
+                            contactId;
                     });
 
-                    this.contacts = contacts; // Actualiza a chave de contacts (Reatividade)
+                    this.contacts = contacts;
 
-                    localStorage.setItem('contactsApp', JSON.stringify(contacts)); // Actualiza o localStorage
+                    localStorage.setItem('contactsApp', JSON.stringify(contacts));
                 },
                 editContact(contact) {
                     this.contact = contact;
                     this.isEdit = true;
                 },
                 updateContact(contact) {
-                    // console.log(contact)
-
-                    // [1, 2, 3] => map *2 => [2, 4, 6]   A funcionalidade de Map permite efectua essa iteracao, transformando as linhas de Array como quiser
 
                     let contacts = this.contacts.map(contactMap => {
                         if (contactMap.id == contact
-                            .id) { // Precisa rever tal condicional e seu funcionamento
+                            .id) {
                             console.log("Contacto actualizado com sucesso");
                             return contact;
                         } else {
-                            // console.log("Nao actualizou o contacto");
-                            return contactMap; // Precisa retornar novamente o array 
+                            return contactMap;
                         }
                     })
 
                     this.contacts = contacts;
                     this.isEdit = false;
 
-                    localStorage.setItem('contactsApp', JSON.stringify(contacts)); // Actualiza o localStorage
-
-                    location.reload(); // Limpar o formulario
+                    localStorage.setItem('contactsApp', JSON.stringify(contacts));
+                    location.reload();
                 }
             }
         });
