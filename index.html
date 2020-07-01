@@ -10,7 +10,7 @@
 
 <body>
     <div class="container" id="app">
-            
+
         <div class="row mt-5">
             <div class="col-12 border-bottom mb-5 d-flex justify-content-between align-items-center">
                 <h2 :title="title">{{name}}</h2>
@@ -34,7 +34,8 @@
 
                     <div class="form-group mr-1">
                         <label>E-mail</label>
-                        <input type="email" class="form-control" placeholder="Seu melhor email..." v-model="contact.email">
+                        <input type="email" class="form-control" placeholder="Seu melhor email..."
+                            v-model="contact.email">
                     </div>
 
                     <div class="form-group mr-1">
@@ -43,8 +44,11 @@
                     </div>
 
                     <div class="form-group ml-1">
-                        <button v-if="!isEdit" class="btn btn-lg btn-rounded btn-success" @click.prevent="saveContact(contact)">Criar Contacto</button>  <!-- metodo para visualizar no console & precisa ignorar o submit usando o modificador "prevent" -->
-                        <button v-if="isEdit"  class="btn btn-lg btn-rounded btn-secondary" @click.prevent="updateContact(contact)">Actualizar Contacto</button>
+                        <button v-if="!isEdit" class="btn btn-lg btn-rounded btn-success"
+                            @click.prevent="saveContact(contact)">Criar Contacto</button>
+                        <!-- metodo para visualizar no console & precisa ignorar o submit usando o modificador "prevent" -->
+                        <button v-if="isEdit" class="btn btn-lg btn-rounded btn-secondary"
+                            @click.prevent="updateContact(contact)">Actualizar Contacto</button>
                     </div>
                 </form>
             </div>
@@ -61,8 +65,10 @@
 
                                 <p class="card-text">{{contact.email}}, {{contact.phone}}</p>
 
-                                <a href="#" class="btn btn-sm btn-primary" @click.prevent="editContact(contact)">EDITAR</a>
-                                <a href="#" class="btn btn-sm btn-danger" @click.prevent="removeContact(contact.id)">DELETAR</a>
+                                <a href="#" class="btn btn-sm btn-primary"
+                                    @click.prevent="editContact(contact)">EDITAR</a>
+                                <a href="#" class="btn btn-sm btn-danger"
+                                    @click.prevent="removeContact(contact.id)">DELETAR</a>
                             </div>
 
                         </div>
@@ -77,13 +83,13 @@
 
     <!-- LINK DE SCRIPT DE FRAMEWORK VUE.JS -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script>    
+    <script>
         let app = new Vue({
             el: "#app", // Instanciado o elemento a ser gerenciado pelo Vue
             data: {
-                contacts: [], 
-                name: 'Contactos App', 
-                contact: {  // Chave criada para usar para o formulario
+                contacts: [],
+                name: 'Contactos App',
+                contact: { // Chave criada para usar para o formulario
                     id: '',
                     name: '',
                     phone: '',
@@ -94,73 +100,80 @@
                 // numberTest: 20  // Pode testar modificar o valor para 10 & 11 no Vue-dev.tools
             },
             computed: {
-                contactsCount(){
-                        return 'Total de contactos: ' + this.contacts.length;
-                        // return `Total de contactos: ${this.contacts.length}`;
+                contactsCount() {
+                    return 'Total de contactos: ' + this.contacts.length;
+                    // return `Total de contactos: ${this.contacts.length}`;
                 }
             },
-            created(){ // Sempre que eh detectado pelo Vue, eh carregado na pagina
+            created() { // Sempre que eh detectado pelo Vue, eh carregado na pagina
                 // console.log('Vue criado...')
-                this.contacts = JSON.parse(localStorage.getItem('contactsApp'));    // Inicia o Ciclo de Vida alimentando com Dados -> Os valores de contactos modificados para Array com JSON.parse
+                this.contacts = JSON.parse(localStorage.getItem(
+                    'contactsApp'
+                )); // Inicia o Ciclo de Vida alimentando com Dados -> Os valores de contactos modificados para Array com JSON.parse
             },
-            methods: {   /* Definicao de nova chave de "metodos" */
-                saveContact(contact){     // Usando um parametro que eh recebido na execucao do clique do botao 
+            methods: {
+                /* Definicao de nova chave de "metodos" */
+                saveContact(contact) { // Usando um parametro que eh recebido na execucao do clique do botao 
                     /* console.log(this.contact)  // Instancia de todo objecto a ser enviado no formulario */
-                    let contacts = localStorage.getItem('contactsApp'); 
+                    let contacts = localStorage.getItem('contactsApp');
 
-                    contact.id = new Date( ).getTime();   // Atribui um ID dinamico
+                    contact.id = new Date().getTime(); // Atribui um ID dinamico
 
-                    if(contacts){
+                    if (contacts) {
                         /*  actualizar meus contactos no local storage */
-                        contacts = JSON.parse(contacts);  // Modifica o JSON em um Array 
-                        contacts.push(contact);           // Adiciona um novo campo no Array
+                        contacts = JSON.parse(contacts); // Modifica o JSON em um Array 
+                        contacts.push(contact); // Adiciona um novo campo no Array
                     } else {
                         // criou esta chave "contactos"
                         contacts = [contact]
                     }
 
-                    this.contacts = contacts;  // Subscreve o valor de novo contacto para depois inserir no novo storage
+                    this.contacts =
+                        contacts; // Subscreve o valor de novo contacto para depois inserir no novo storage
 
                     /*  actualizar local storage independemente de novo contacto ou nova adicao */
-                    localStorage.setItem('contactsApp', JSON.stringify(contacts)) // Converte o Array em formato JSON
+                    localStorage.setItem('contactsApp', JSON.stringify(
+                        contacts)) // Converte o Array em formato JSON
 
                     location.reload(); // Limpar o formulario
                 },
-                removeContact(contactId){
+                removeContact(contactId) {
                     console.log("ID: " + contactId)
 
-                    let contacts = localStorage.getItem('contactsApp'); 
+                    let contacts = localStorage.getItem('contactsApp');
 
-                    if(!contacts) return; 
+                    if (!contacts) return;
 
-                    contacts = JSON.parse(contacts);                    
+                    contacts = JSON.parse(contacts);
 
                     // Bug - faltava o "this"
                     contacts = this.contacts.filter((contact) => {
                         // console.log("ID: " + contactId + " & Nome: " + contact.name)
-                        return contact.id != contactId;  // Retorna apenas os ID diferentes do id escolhido
+                        return contact.id !=
+                            contactId; // Retorna apenas os ID diferentes do id escolhido
                     });
 
-                    this.contacts = contacts;  // Actualiza a chave de contacts (Reatividade)
+                    this.contacts = contacts; // Actualiza a chave de contacts (Reatividade)
 
                     localStorage.setItem('contactsApp', JSON.stringify(contacts)); // Actualiza o localStorage
-                }, 
-                editContact(contact){
-                    this.contact = contact;
-                    this.isEdit = true;                    
                 },
-                updateContact(contact){
+                editContact(contact) {
+                    this.contact = contact;
+                    this.isEdit = true;
+                },
+                updateContact(contact) {
                     // console.log(contact)
 
                     // [1, 2, 3] => map *2 => [2, 4, 6]   A funcionalidade de Map permite efectua essa iteracao, transformando as linhas de Array como quiser
 
                     let contacts = this.contacts.map(contactMap => {
-                        if(contactMap.id == contact.id) {  // Precisa rever tal condicional e seu funcionamento
+                        if (contactMap.id == contact
+                            .id) { // Precisa rever tal condicional e seu funcionamento
                             console.log("Contacto actualizado com sucesso");
                             return contact;
-                        }else{
+                        } else {
                             // console.log("Nao actualizou o contacto");
-                            return contactMap;  // Precisa retornar novamente o array 
+                            return contactMap; // Precisa retornar novamente o array 
                         }
                     })
 
@@ -169,11 +182,11 @@
 
                     localStorage.setItem('contactsApp', JSON.stringify(contacts)); // Actualiza o localStorage
 
-                    location.reload();  // Limpar o formulario
+                    location.reload(); // Limpar o formulario
                 }
-            } 
+            }
         });
     </script>
-</body> 
+</body>
 
 </html>
