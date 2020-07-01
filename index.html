@@ -38,7 +38,8 @@
                     </div>
 
                     <div class="form-group ml-1">
-                        <button class="btn btn-lg btn-rounded btn-success" @click.prevent="saveContact(contact)">Criar Contacto</button>  <!-- metodo para visualizar no console & precisa ignorar o submit usando o modificador "prevent" -->
+                        <button v-if="!isEdit" class="btn btn-lg btn-rounded btn-success" @click.prevent="saveContact(contact)">Criar Contacto</button>  <!-- metodo para visualizar no console & precisa ignorar o submit usando o modificador "prevent" -->
+                        <button v-if="isEdit"  class="btn btn-lg btn-rounded btn-secondary" @click.prevent="updateContact(contact)">Actualizar Contacto</button>
                     </div>
                 </form>
             </div>
@@ -55,7 +56,7 @@
 
                                 <p class="card-text">{{contact.email}}, {{contact.phone}}</p>
 
-                                <a href="#" class="btn btn-sm btn-primary">EDITAR</a>
+                                <a href="#" class="btn btn-sm btn-primary" @click.prevent="editContact(contact)">EDITAR</a>
                                 <a href="#" class="btn btn-sm btn-danger" @click.prevent="removeContact(contact.id)">DELETAR</a>
                             </div>
 
@@ -80,7 +81,8 @@
                     name: '',
                     phone: '',
                     email: '',
-                }
+                },
+                isEdit: false
             },
             created(){ // Sempre que eh detectado pelo Vue, eh carregado na pagina
                 // console.log('Vue criado...')
@@ -106,13 +108,15 @@
 
                     /*  actualizar local storage independemente de novo contacto ou nova adicao */
                     localStorage.setItem('contactsApp', JSON.stringify(contacts)) // Converte o Array em formato JSON
+
+                    location.reload(); // Limpar o formulario
                 },
                 removeContact(contactId){
                     console.log("ID: " + contactId)
 
                     let contacts = localStorage.getItem('contactsApp'); 
 
-                    if(!contacts) return;  // Se nao tiver 
+                    if(!contacts) return; 
 
                     contacts = JSON.parse(contacts);                    
 
@@ -125,10 +129,36 @@
                     this.contacts = contacts;  // Actualiza a chave de contacts (Reatividade)
 
                     localStorage.setItem('contactsApp', JSON.stringify(contacts)); // Actualiza o localStorage
+                }, 
+                editContact(contact){
+                    this.contact = contact;
+                    this.isEdit = true;                    
+                },
+                updateContact(contact){
+                    // console.log(contact)
+
+                    // [1, 2, 3] => map *2 => [2, 4, 6]   A funcionalidade de Map permite efectua essa iteracao, transformando as linhas de Array como quiser
+
+                    let contacts = this.contacts.map(contactMap => {
+                        if(contactMap.id == contact.id) {  // Precisa rever tal condicional e seu funcionamento
+                            console.log("Contacto actualizado com sucesso");
+                            return contact;
+                        }else{
+                            // console.log("Nao actualizou o contacto");
+                            return contactMap;  // Precisa retornar novamente o array 
+                        }
+                    })
+
+                    this.contacts = contacts;
+                    this.isEdit = false;
+
+                    localStorage.setItem('contactsApp', JSON.stringify(contacts)); // Actualiza o localStorage
+
+                    location.reload();  // Limpar o formulario
                 }
             } 
         });
     </script>
-</body>
+</body> 
 
 </html>
