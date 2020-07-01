@@ -13,7 +13,7 @@
             
         <div class="row mt-5">
             <div class="col-12 border-bottom mb-5 d-flex justify-content-between align-items-center">
-                <h2>{{name}}</h2>
+                <h2 v-bind:title="title">{{name}}</h2>
                 <p>{{contactsCount}}</p>
             </div>
 
@@ -90,6 +90,7 @@
                     email: '',
                 },
                 isEdit: false,
+                title: 'Meu primeiro app - VueJS'
                 // numberTest: 20  // Pode testar modificar o valor para 10 & 11 no Vue-dev.tools
             },
             computed: {
