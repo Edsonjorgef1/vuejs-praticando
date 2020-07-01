@@ -108,23 +108,23 @@
                     localStorage.setItem('contactsApp', JSON.stringify(contacts)) // Converte o Array em formato JSON
                 },
                 removeContact(contactId){
-                    // console.log("ID: " + contactId)
+                    console.log("ID: " + contactId)
 
-                    let contacts = localStorage.getItem('contactsApp');
+                    let contacts = localStorage.getItem('contactsApp'); 
 
-                    if(!contacts) return;
+                    if(!contacts) return;  // Se nao tiver 
 
-                    contactos = JSON.parse(contacts);
+                    contacts = JSON.parse(contacts);                    
 
                     // Bug - faltava o "this"
                     contacts = this.contacts.filter((contact) => {
-                        console.log("ID: " + contactId + " & Nome: " + contact.name)
-                        return contact.id != contactId;
+                        // console.log("ID: " + contactId + " & Nome: " + contact.name)
+                        return contact.id != contactId;  // Retorna apenas os ID diferentes do id escolhido
                     });
 
-                    this.contacts = contacts;
+                    this.contacts = contacts;  // Actualiza a chave de contacts (Reatividade)
 
-                    localStorage.setItem('contactsApp', JSON.stringify(contacts));
+                    localStorage.setItem('contactsApp', JSON.stringify(contacts)); // Actualiza o localStorage
                 }
             } 
         });
