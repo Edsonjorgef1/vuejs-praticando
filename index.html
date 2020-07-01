@@ -19,9 +19,9 @@
 
             <div class="col-4">
 
-                <div v-if="isEdit">Condicional sucesso</div>
-                <!-- <div>outro teste sucesso</div> -->
-                <div v-else>condicional default</div>
+                <div v-if="numberTest == 11">Valor 11</div>
+                <div v-else-if="numberTest == 10">Valor 10</div>
+                <div v-else>Nenhum dos valores pensados... </div>
 
                 <form action="">
 
@@ -87,7 +87,8 @@
                     phone: '',
                     email: '',
                 },
-                isEdit: false
+                isEdit: false,
+                numberTest: 20  // Pode testar modificar o valor para 10 & 11 no Vue-dev.tools
             },
             computed: {
                 contactsCount(){
